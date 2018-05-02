@@ -1,0 +1,25 @@
+{
+    "name": "eesoft/eeTools",
+    "description": "Lee self tools",
+    "keywords": ["yii2", "framework", "lee"],
+    "homepage": "http://yiilib.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
