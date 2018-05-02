@@ -26,4 +26,12 @@ class eeDebug{
         }
     }
     
+    public static function show($obj, $exist = false) {
+        var_dump($obj);
+    
+        if ($exist) {
+            exit ();
+        }
+    }
+    
 }
