@@ -1,6 +1,9 @@
 <?php
 namespace eeTools\common;
 
+
+use Hashids\Hashids;
+
 /**
  * All eeTools' class are Lee's self-dev and self-use class, it's ONLY can be used in Lee's projects, include personal or bussiness.
  * NO ONE ALLOW TO COPY//USE//PUBLIC IT OUT LEE'S PROJECT! IT'S UNDER PROTECT OF LOCAL LAW!!
@@ -81,5 +84,33 @@ class eeString{
         }
     
         return $constValue;
+    }
+    
+    /**
+     * encode id to hash string
+     * @param unknown $id
+     */
+    public static function hashEncodeInt($id) {
+        $salt = \Yii::$app->params['hashid.salt'];
+        $minLength = \Yii::$app->params['hashid.minLength'];
+        $encodeString = '';
+    
+        $ha = new Hashids($salt, $minLength);
+        $encodeString = $ha->encode($id);
+    
+    
+        return $encodeString;
+    }
+    
+    public static function hashDecodeInt($id) {
+        $salt = \Yii::$app->params['hashid.salt'];
+        $minLength = \Yii::$app->params['hashid.minLength'];
+        $decodeString = '';
+    
+        $ha = new Hashids($salt, $minLength);
+        $decodeString = $ha->decode($id);
+    
+    
+        return @$decodeString[0];
     }
 }
