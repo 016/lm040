@@ -1,15 +1,27 @@
 {
-    "name": "eeTools",
+    "name": "eesoft/eeTools",
     "description": "Lee self tools",
     "keywords": ["eesoft", "framework", "lee"],
     "homepage": "http://yiilib.com/",
+    "authors": [
+        {
+            "name": "Lee",
+            "email": "boy.lee.here@gmail.com",
+            "homepage": "https://github.com/016"
+        }
+    ],
     "type": "vcs",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.0"
     },
     "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "eeTools\\": "./"
+        }
     },
     "config": {
         "process-timeout": 1800
