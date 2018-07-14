@@ -82,6 +82,86 @@ class eeMail{
     }
     
     /**
+     * send mail by sendcloud api
+     * based on v2.0 email send api http://www.sendcloud.net/doc/email_v2/send_email/
+     * @param unknown $toArr [['mail'=>'xxx'], [xx]]
+     * @param string $subject
+     * @param string $body
+     * @param \CURLFile $file 
+     * @return mixed
+     */
+    public static function sendMailSCAPI($toArr, $subject = '', $body = '', $file = null) {
+        $to = '';
+        $recipient_variable = [ ];
+    
+        // generate correct to and recipient data
+        foreach ( $toArr as $key => $oneTo ) {
+            if (! empty ( $to )) {
+                $to .= ', ';
+            }
+            $to .= $oneTo ['mail'];
+        }
+    
+        // var_dump($recipient_variable);
+        //         var_dump($to);
+        //         exit;
+    
+    
+        $message = [];
+        $message ['apiKey'] = \Yii::$app->params ['sendcloud_API_key'];
+    
+        $message ['apiUser'] = \Yii::$app->params ['sendcloud_API_user'];
+    
+    
+        $message ['from'] = \Yii::$app->params ['adminEmail'];
+    
+        $message ['to'] = $to;
+    
+        $message ['subject'] = $subject;
+    
+        $message ['html'] = $body;
+
+        if ($file !== null) {
+            $message['attachments'] = $file;
+        }
+    
+        $ch = curl_init ();
+
+        curl_setopt ( $ch, CURLOPT_URL, \Yii::$app->params ['sendcloud_API_url'] );
+    
+        curl_setopt ( $ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
+    
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+
+
+
+    
+        curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
+    
+        curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
+    
+        curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
+
+
+    
+        // curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $message );
+    
+        $result = curl_exec ( $ch );
+
+        if($result === false) {
+            $result = curl_error($ch);
+        }
+
+    
+        curl_close ( $ch );
+    
+        return $result;
+    }
+    
+    /**
      * send email direct from server
      * @param unknown $to
      * @param unknown $subject
