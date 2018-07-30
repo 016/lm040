@@ -31,6 +31,13 @@ class eeUploadedFile extends UploadedFile{
         
         // random name
         $this->newName = $fileName;
+        
+        //check extension
+        $tmpArr = explode('.', $this->newName);
+        if (!empty($tmpArr) && $this->extension != end($tmpArr)) {
+            $this->newName = str_replace('.'.end($tmpArr), '.'.$this->extension, $this->newName);
+        }//auto switch extension name.
+        
         if (empty($fileName)) {
             $this->newName = $path . eeString::randomString ( 10, 1, 2, '_' ) . '.' . $this->extension;
         }
