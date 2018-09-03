@@ -228,7 +228,7 @@ class RESTfulObject extends Model
 
         
         //load access token
-        $t = OauthAccessToken::find()->where(['oat_accessToken'=>$inputToken, 'oat_closed'=>0])->andWhere(['>=', 'oat_expireDate', eeDate::f()])->one();
+        $t = OauthAccessToken::find()->where(['oat_accessToken'=>$inputToken, 'oat_closed'=>0])->andWhere(['>=', 'oat_expiredDate', eeDate::f()])->one();
         if (empty($t)) {
             eeResponse::errorResponse(401003, 401);
         }
