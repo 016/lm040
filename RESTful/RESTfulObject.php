@@ -225,6 +225,9 @@ class RESTfulObject extends Model
         if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
             $inputToken = $_SERVER['HTTP_X_CSRF_TOKEN'];
         }
+        if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+            $inputToken = $_SERVER['HTTP_AUTHORIZATION'];
+        }
 
         
         //load access token
