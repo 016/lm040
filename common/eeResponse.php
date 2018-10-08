@@ -94,6 +94,7 @@ class eeResponse{
         //encode
         if ($encodeType == 'json') {
             $returnBody = Json::encode($returnArr);
+            $type = 'application/json;charset=UTF-8';
         }
         
         self::renderResponse($returnBody, $statusCode);
