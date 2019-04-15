@@ -75,9 +75,17 @@ class eeResponse{
         
         //force change type here.
 //         $errorCode = (int)$errorCode;
-        
+        //try move errorCode Mapping file into each project,
+        $eeErrorCodeLoadPath = '';
+        if (isset(\Yii::$app->params['rest.libPath'])) {
+            $eeErrorCodeLoadPath = \Yii::$app->params['rest.libPath'];
+        }
+        if (empty($eeErrorCodeLoadPath)) {
+            $eeErrorCodeLoadPath = __DIR__.'/../data';
+        }//keep the old path as default one.
+
         //load error code mapping
-        $errorCodeMapping = require __DIR__.'/../data/eeErrorCode.php';
+        $errorCodeMapping = require $eeErrorCodeLoadPath.'/eeErrorCode.php';
         
         if (isset($errorCodeMapping[$errorCode])) {
             $errorMsg = $errorCodeMapping[$errorCode];
