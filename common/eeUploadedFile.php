@@ -16,7 +16,7 @@ use yii\helpers\BaseFileHelper;
 
 class eeUploadedFile extends UploadedFile{
     
-    public $useMimeExt = false;
+    public $useMimeExt = true;
     public $_ext = '';
     public $newName;
     
