@@ -70,8 +70,10 @@ class eeUploadedFile extends UploadedFile{
     
         $mimeType = BaseFileHelper::getMimeType($this->tempName);
     
-        $extensionName = 'eex';
+        //default
+        $extensionName = $this->extension;
     
+        //check mapping.
         $mimeArr = [];
         $mimeArr['image/jpg'] = 'jpg';
         $mimeArr['image/png'] = 'png';
@@ -80,6 +82,7 @@ class eeUploadedFile extends UploadedFile{
         if (isset($mimeArr[$mimeType])) {
             $extensionName = $mimeArr[$mimeType];
         }
+        
         $this->_ext = $extensionName;
     }
 }

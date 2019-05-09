@@ -85,6 +85,10 @@ class eeNet {
         
         //get result
         $response = curl_exec($ch);
+        if ($response == false) {
+            var_dump(curl_error($ch));
+            exit;
+        }
 //         var_dump($response);
 //         exit;
         
