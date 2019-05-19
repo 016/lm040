@@ -58,6 +58,7 @@ class aliBased extends Object {
         $this->signatureVersion = '1.0';
         $this->version = '2016-09-27';
         
+        
         // switch timezone
         date_default_timezone_set("UTC");
         $this->timestamp = date('c');
