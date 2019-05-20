@@ -25,19 +25,27 @@ class eeImage{
         //填充背景色
         imagefill($image, 0, 0, $bgcolor);
 
-        $tmpArr = str_split($code);
+        $tmpArr = eeString::mb_str_split($code);
 
         //add letter to image one by one with diff color&size
-        foreach (str_split($code) as $i => $value) {
+        foreach ($tmpArr  as $i => $value) {
             //设置字体大小
-            $fontsize = mt_rand(2, 6);
+            $fontsize = mt_rand(15, 20);
             //设置字体颜色，随机颜色
             $fontcolor = imagecolorallocate($image, rand(0,120),rand(0,120), rand(0,120));
             //随机码宽度
-            $x = (($i+1)*$w/count($tmpArr))+rand(5,10);
+            $maxOffW = $w/count($tmpArr);
+            if ($maxOffW > 10) {
+                $maxOffW = 10;
+            }
+            $x = (($i)*$w/count($tmpArr))+rand(0,$maxOffW);
             //随机码高度
-            $y = rand(5,$h/2);
-            imagestring($image,$fontsize,$x,$y,$value,$fontcolor);
+            $y = rand($h/2,$h/2+10);
+
+            //random angle
+            $angle = mt_rand(-40, 40);
+
+            imagettftext($image,$fontsize, $angle, $x,$y,$fontcolor, __DIR__.'/../fonts/kaiti2312.ttf' , $value);
         }
 
 

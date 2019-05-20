@@ -113,4 +113,14 @@ class eeString{
     
         return @$decodeString[0];
     }
+    
+
+    /**
+     * string split for all encode 
+     * @param unknown $str
+     */
+    function mb_str_split($str){
+        return preg_split('/(?<!^)(?!$)/u', $str );
+    }
+    
 }
