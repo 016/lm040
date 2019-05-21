@@ -16,7 +16,9 @@ use yii\helpers\BaseFileHelper;
 
 class eeUploadedFile extends UploadedFile{
     
-    public $useMimeExt = true;
+    public $_user_id;
+
+    public $useMimeExt = false;
     public $_ext = '';
     public $newName;
     
@@ -51,7 +53,12 @@ class eeUploadedFile extends UploadedFile{
         
         
         if (empty($fileName)) {
-            $this->newName = $path . eeString::randomString ( 10, 1, 2, '_' ) . '.' . $this->_ext;
+            $this->newName = $path;
+            if (!empty($this->_user_id)) {
+                $this->newName .= $this->_user_id.'_';
+            }
+
+            $this->newName .= eeString::randomString ( 10, 1, 2, '_' ) . '.' . $this->_ext;
         }else{
             //check extension for exist file name
             $tmpArr = explode('.', $this->newName);
@@ -70,10 +77,8 @@ class eeUploadedFile extends UploadedFile{
     
         $mimeType = BaseFileHelper::getMimeType($this->tempName);
     
-        //default
-        $extensionName = $this->extension;
+        $extensionName = 'eex';
     
-        //check mapping.
         $mimeArr = [];
         $mimeArr['image/jpg'] = 'jpg';
         $mimeArr['image/png'] = 'png';
@@ -82,7 +87,6 @@ class eeUploadedFile extends UploadedFile{
         if (isset($mimeArr[$mimeType])) {
             $extensionName = $mimeArr[$mimeType];
         }
-        
         $this->_ext = $extensionName;
     }
 }
