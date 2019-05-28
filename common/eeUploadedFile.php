@@ -21,6 +21,8 @@ class eeUploadedFile extends UploadedFile{
     public $useMimeExt = false;
     public $_ext = '';
     public $newName;
+    public $fileName;
+    public $v = 1;
     
     public function init() {
         parent::init();
@@ -50,24 +52,38 @@ class eeUploadedFile extends UploadedFile{
         
         // random name
         $this->newName = $fileName;
+        $tmpArr = explode('?v=', $this->newName);
+        $this->fileName = $tmpArr[0];
+        if (isset($tmpArr[1])) {
+            $this->v = $tmpArr[1];
+        }
         
         
         if (empty($fileName)) {
-            $this->newName = $path;
+            $this->fileName = $path;
             if (!empty($this->_user_id)) {
-                $this->newName .= $this->_user_id.'_';
+                $this->fileName .= $this->_user_id.'_';
             }
 
-            $this->newName .= eeString::randomString ( 10, 1, 2, '_' ) . '.' . $this->_ext;
+            $this->fileName .= eeString::randomString ( 10, 1, 2, '_' ) . '.' . $this->_ext;
         }else{
+            $this->v ++;
+            
             //check extension for exist file name
-            $tmpArr = explode('.', $this->newName);
+            $tmpArr = explode('.', $this->fileName);
             if (!empty($tmpArr) && $this->_ext != end($tmpArr)) {
-                $this->newName = str_replace('.'.end($tmpArr), '.'.$this->_ext, $this->newName);
+                //remove old file
+                unlink($basedPath . $this->fileName);
+                
+                $this->fileName = str_replace('.'.end($tmpArr), '.'.$this->_ext, $this->fileName);
             }//auto switch extension name.
         }
         
-        return $this->saveAs ( $basedPath . $this->newName );
+        //add v back to name
+        $this->newName = $this->fileName.'?v='.$this->v;
+        
+        //move file with filename
+        return $this->saveAs ( $basedPath . $this->fileName );
     }
     
     /**
