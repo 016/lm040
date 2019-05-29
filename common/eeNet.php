@@ -47,7 +47,13 @@ class eeNet {
 //         curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1); //follow 301
 
         //user agent
-        $userAgent = eeNet::getUserAgent();
+        if (isset($header['User-Agent'])) {
+            //special agent
+            $userAgent = $header['User-Agent'];
+            unset($header['User-Agent']);
+        }else{
+            $userAgent = eeNet::getUserAgent();    
+        }
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);   //set User-Agent
         
         
