@@ -16,7 +16,7 @@ class eeArray{
     /**
      * use value as key
      */
-    public static function arrIndexAdd($inputArr, $t=1){
+    public static function arrIndexAdd($inputArr, $t = true){
         if ($inputArr == null) {
             $inputArr = [];
         }
@@ -31,6 +31,24 @@ class eeArray{
     	return $returnArr;
     	
     }
+    
+    
+    /**
+     * use one second lvl value as key
+     */
+    public static function formatArr($inputArr, $keyIndex){
+        if ($inputArr == null) {
+            $inputArr = [];
+        }
+        $returnArr = [];
+        foreach ($inputArr as $oneI) {
+            $returnArr[$oneI[$keyIndex]] = $oneI;
+        }
+         
+        return $returnArr;
+         
+    }
+    
     
 
     /**
