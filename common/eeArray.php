@@ -36,19 +36,22 @@ class eeArray{
     /**
      * use one second lvl value as key
      */
-    public static function formatArr($inputArr, $keyIndex){
+    public static function formatArr($inputArr, $keyIndex, $isObj = false){
         if ($inputArr == null) {
             $inputArr = [];
         }
         $returnArr = [];
         foreach ($inputArr as $oneI) {
-            $returnArr[$oneI[$keyIndex]] = $oneI;
+            if ($isObj) {
+                $returnArr[$oneI->$keyIndex] = $oneI;
+            }else{
+                $returnArr[$oneI[$keyIndex]] = $oneI;
+            }
         }
          
         return $returnArr;
          
     }
-    
     
 
     /**

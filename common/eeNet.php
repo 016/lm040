@@ -92,8 +92,11 @@ class eeNet {
         //get result
         $response = curl_exec($ch);
         if ($response == false) {
+            //curl_error($ch), curl_errno($ch)
+            var_dump($url);
+            echo 'false once curl';
             var_dump(curl_error($ch));
-            exit;
+            var_dump(curl_errno($ch));
         }
 //         var_dump($response);
 //         exit;
@@ -113,6 +116,10 @@ class eeNet {
         
         if ($response === false) {
             //nothing load, return false as end.
+            var_dump($url);
+            var_dump(curl_error($ch));
+            var_dump(curl_errno($ch));
+            exit;
             return $response;
         }
         
@@ -121,9 +128,10 @@ class eeNet {
         //split header and body
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $header = substr($response, 0, $headerSize);
+        $body = '';
         
         //200 for success
-        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200') {
+        if (in_array(curl_getinfo($ch, CURLINFO_HTTP_CODE), [200, 401, 404])) {
             $body = substr($response, $headerSize);
         }
         
@@ -168,7 +176,7 @@ class eeNet {
             }
         }
         
-        if (!in_array(curl_getinfo($ch, CURLINFO_HTTP_CODE), [200, 302])){
+        if (empty($body)){
             //no 200, no 302, use status code as body, it's all we need.
             $body = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         }
