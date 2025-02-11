@@ -97,15 +97,15 @@ class eeResponse{
     
     public static function sendResponse($returnArr, $statusCode = 200, $encodeType = 'json'){
         //more common format work can go here.
-        
+        $content_type = 'text/html;charset=UTF-8';
         
         //encode
         if ($encodeType == 'json') {
             $returnBody = Json::encode($returnArr);
-            $type = 'application/json;charset=UTF-8';
+            $content_type = 'application/json; charset=UTF-8';
         }
         
-        self::renderResponse($returnBody, $statusCode);
+        self::renderResponse($returnBody, $statusCode, $content_type);
     }
     /**
      * render response html
@@ -113,7 +113,7 @@ class eeResponse{
      * @param number $statusCode
      * @param string $encodeType
      */
-    public static function renderResponse($body = '', $status = 200, $content_type = 'text/html'){
+    public static function renderResponse($body = '', $status = 200, $content_type = 'text/html; charset=UTF-8'){
         // set the status
         //error_log("================= sendResponse==============");
         //error_log($body);
